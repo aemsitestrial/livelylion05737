@@ -1,0 +1,111 @@
+/* hero-showcase — opening hero: copy + CTAs beside a 3-image cluster.
+   Values extracted from source computed styles (wknd-trendsetters.site). */
+
+/* Section padding overrides global --section-padding (80px) to match source. */
+.hero-showcase-container {
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
+/* Block layout — mobile-first: single column, text before images. */
+.hero-showcase {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+
+/* EDS DOM order is image-row first, text-row second; show text first. */
+.hero-showcase > div:nth-child(2) {
+  order: -1;
+}
+
+/* Image cluster cell — 2 images top row, 1 bottom (auto-flow). */
+.hero-showcase > div:first-child > div {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.hero-showcase > div:first-child p {
+  margin: 0;
+}
+
+.hero-showcase picture {
+  display: block;
+  line-height: 0;
+}
+
+.hero-showcase > div:first-child img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+/* Headline */
+.hero-showcase h1 {
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+/* Subheading */
+/* stylelint-disable-next-line no-descending-specificity */
+.hero-showcase p {
+  margin: 24px 0 0;
+  font-size: var(--body-font-size-m);
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+/* CTA buttons — sit side by side below the copy. */
+.hero-showcase .button-container {
+  display: inline-block;
+  margin: 32px 0 0;
+}
+
+.hero-showcase .button-container + .button-container {
+  margin-left: 16px;
+}
+
+.hero-showcase .button-container a.button:any-link {
+  margin: 0;
+}
+
+/* Second CTA is the outlined/secondary variant. */
+.hero-showcase .button-container:last-child a.button:any-link {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.hero-showcase .button-container:last-child a.button:hover,
+.hero-showcase .button-container:last-child a.button:focus {
+  background-color: var(--text-color);
+  color: var(--background-color);
+}
+
+@media (width >= 900px) {
+  .hero-showcase-container {
+    padding-top: 128px;
+    padding-bottom: 128px;
+  }
+
+  .hero-showcase {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 64px;
+  }
+
+  /* Image cluster becomes two columns; 3rd image wraps below. */
+  .hero-showcase > div:first-child > div {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hero-showcase h1 {
+    font-size: 56px;
+  }
+}
