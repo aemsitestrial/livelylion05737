@@ -1,0 +1,98 @@
+/* columns-article — two-column article intro (image + breadcrumbs/heading/byline) */
+
+/* Values extracted from source computed styles at https://wknd-trendsetters.site/ */
+
+.columns-article > div {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* image column: rounded 3:2 cover image */
+.columns-article img {
+  width: 100%;
+}
+
+.columns-article > div > div {
+  order: 1;
+}
+
+.columns-article > div > .columns-article-img-col {
+  order: 0;
+}
+
+.columns-article > div > .columns-article-img-col img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+/* text column */
+.columns-article > div > div:last-child {
+  display: flex;
+  flex-direction: column;
+}
+
+/* breadcrumbs (first paragraph: inline links) */
+.columns-article > div > div:last-child > p:first-child {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 32px;
+  font-size: 16px;
+}
+
+.columns-article > div > div:last-child > p:first-child a:any-link {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.columns-article > div > div:last-child > p:first-child a:first-child:any-link {
+  color: var(--text-color);
+}
+
+/* heading */
+.columns-article h2 {
+  margin: 0;
+  font-size: var(--heading-font-size-xxl);
+  font-weight: 700;
+  font-family: var(--heading-font-family);
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: var(--text-color);
+}
+
+/* byline + date (paragraphs after the heading) */
+.columns-article > div > div:last-child > p:nth-of-type(2) {
+  margin: 16px 0 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+.columns-article > div > div:last-child > p:nth-of-type(3) {
+  margin: 8px 0 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+@media (width >= 900px) {
+  .columns-article > div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .columns-article > div > div {
+    order: unset;
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "xwalk",
+  "sites": {
+    "livelylion05737": {
+      "previewOrg": "aemsitestrial",
+      "previewSite": "livelylion05737",
+      "contentHostUrl": "author-p153710-e1614654.adobeaemcloud.com",
+      "aemSitePath": "/content/2026/37/livelylion05737",
+      "aemAssetsFolderPath": "/content/dam/2026/37/livelylion05737",
+      "aemSiteName": "livelylion05737",
+      "aemSiteTitle": "livelylion05737",
+      "libraryUrl": "https://main--sta-xwalk-boilerplate--aemysites.aem.page/tools/sidekick/library.json"
+    }
+  }
+}
