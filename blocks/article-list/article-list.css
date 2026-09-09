@@ -1,0 +1,15 @@
+.article-card {
+  border: 1px solid #ddd;
+  padding: 16px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+}
+
+.article-card h3 {
+  margin-top: 0;
+}
+
+.article-card .date {
+  color: #666;
+  font-size: 0.9rem;
+}
