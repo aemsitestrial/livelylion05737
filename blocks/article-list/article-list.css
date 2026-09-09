@@ -1,15 +1,34 @@
-.article-card {
+.article-list {
+  display: grid;
+  gap: 24px;
+}
+
+.article-list .article-card {
+  padding: 24px;
+  background-color: #fff;
   border: 1px solid #ddd;
-  padding: 16px;
-  margin-bottom: 12px;
   border-radius: 8px;
 }
 
-.article-card h3 {
+.article-list .article-card-title {
   margin-top: 0;
+  margin-bottom: 8px;
 }
 
-.article-card .date {
+.article-list .article-card-date {
+  margin-top: 0;
   color: #666;
-  font-size: 0.9rem;
+  font-size: 14px;
+}
+
+.article-list .article-card-body {
+  margin-bottom: 0;
+}
+
+.article-list.article-list-error {
+  padding: 16px;
+  color: #b42318;
+  background-color: #fef3f2;
+  border: 1px solid #fecdca;
+  border-radius: 8px;
 }

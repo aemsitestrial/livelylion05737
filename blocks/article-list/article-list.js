@@ -1,38 +1,102 @@
-const AEM_AUTHOR = 'http://localhost:4502';
+const QUERY_URL = 'http://localhost:4502/graphql/execute.json/eds-project/article-list';
 
-const QUERY_URL =
-  `${AEM_AUTHOR}/graphql/execute.json/eds-project/article-list`;
+function createElement(tag, className, text) {
+  const element = document.createElement(tag);
 
-export default async function decorate(block) {
-  const response = await fetch(QUERY_URL, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  if (!response.ok) {
-    console.error('GraphQL request failed');
-    return;
+  if (className) {
+    element.className = className;
   }
 
-  const { data } = await response.json();
+  if (text) {
+    element.textContent = text;
+  }
 
-  const articles = data?.articleList?.items ?? [];
+  return element;
+}
 
-  block.innerHTML = '';
+export default async function decorate(block) {
+  block.textContent = 'Loading articles...';
 
-  articles.forEach((article) => {
-    const card = document.createElement('div');
+  try {
+    const response = await fetch(QUERY_URL, {
+      method: 'GET',
+      credentials: 'include',
+    });
 
-    card.className = 'article-card';
+    if (response.redirected || response.url.includes('/login.html')) {
+      throw new Error(
+        'Please sign in to your local AEM Author instance.',
+      );
+    }
 
-    card.innerHTML = `
-      <h3>${article.title}</h3>
-      <p>${article.publishDate || ''}</p>
-      <p>${article.body?.plaintext || ''}</p>
-    `;
+    if (!response.ok) {
+      throw new Error(
+        `GraphQL request failed with status ${response.status}.`,
+      );
+    }
 
-    block.append(card);
-  });
+    const contentType = response.headers.get('content-type') || '';
+
+    if (!contentType.includes('application/json')) {
+      throw new Error('AEM did not return a JSON response.');
+    }
+
+    const result = await response.json();
+
+    if (result.errors?.length) {
+      throw new Error(
+        result.errors.map((error) => error.message).join(', '),
+      );
+    }
+
+    const articles = result.data?.articleList?.items ?? [];
+
+    block.textContent = '';
+
+    if (articles.length === 0) {
+      block.textContent = 'No articles found.';
+      return;
+    }
+
+    articles.forEach((article) => {
+      const card = createElement('article', 'article-card');
+
+      const title = createElement(
+        'h3',
+        'article-card-title',
+        article.title || 'Untitled article',
+      );
+
+      card.append(title);
+
+      if (article.publishDate) {
+        const formattedDate = new Date(
+          article.publishDate,
+        ).toLocaleDateString();
+
+        const date = createElement(
+          'p',
+          'article-card-date',
+          formattedDate,
+        );
+
+        card.append(date);
+      }
+
+      const body = createElement(
+        'p',
+        'article-card-body',
+        article.body?.plaintext || '',
+      );
+
+      card.append(body);
+      block.append(card);
+    });
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Article List error:', error);
+
+    block.textContent = error.message;
+    block.classList.add('article-list-error');
+  }
 }
